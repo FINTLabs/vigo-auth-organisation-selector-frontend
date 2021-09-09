@@ -1,24 +1,44 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import axios from "axios";
-import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {Box, Button, Checkbox, FormControlLabel} from "@material-ui/core";
+import {createTheme, MuiThemeProvider, ThemeOptions} from "@material-ui/core/styles";
+import {Contract} from "./model/Contract";
+import OrganisationSelector from "./components/OrganisationSelector";
+import Header from "./components/Header";
+import {CookiesProvider, useCookies} from "react-cookie";
 
-interface Contract {
-    url: string,
-    displayName: string,
-    image: Image
-
+function createMyTheme(options: ThemeOptions) {
+    return createTheme({
+        palette: {
+            secondary: {
+                light: '#7fb434',
+                main: '#5FA202',
+                dark: '#427101',
+            },
+            primary: {
+                light: '#4b727a',
+                main: '#1F4F59',
+                dark: '#15373e',
+            },
+        },
+        typography: {
+            fontFamily: [
+                "Nunito Sans", 'sans-serif'
+            ].join(','),
+        },
+        ...options,
+    })
 }
 
-interface Image {
-    base64Image: string,
-    mimeType: string
-}
 
 function App() {
-
+    const theme = createMyTheme({});
     const [contracts, setContracts] = useState<Contract[]>([]);
-    const [selectedContract, setSelectedContract] = useState<string>("")
+    const [selectedContract, setSelectedContract] = useState<string>("");
+    const [rememberMe, setRememberMe] = useState<boolean>(false);
+    const [cookies, setCookie] = useCookies(['rememberedOrganisation']);
+
 
     const getAuthenticationContracts = () => {
         axios.get<Contract[]>("/api/organisations")
@@ -28,48 +48,52 @@ function App() {
             })
     }
 
-    const getImage = (): Contract | undefined => {
-        let find = contracts.find((contract: Contract) => {
-            return contract.url === selectedContract;
-
-        });
-        console.log("asdf", find)
-        return find;
-    }
+    const handleRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRememberMe(event.target.checked);
+        setCookie("rememberedOrganisation",selectedContract);
+    };
 
     useEffect(() => {
+        if (cookies.rememberedOrganisation) {
+            window.location = cookies.rememberedOrganisation;
+        }
         getAuthenticationContracts();
 
-    }, [])
+
+
+    }, [cookies.rememberedOrganisation])
     return (
-        <div className="App">
-
-            {selectedContract &&
-            <img src={`data:image/png;base64, ${getImage()?.image.base64Image}`} alt="Red dot"/>
-            }
-
-            <FormControl variant="outlined" fullWidth>
-                <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
-                <Select
-
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={selectedContract}
-                    onChange={(event: React.ChangeEvent<{ value: any }>) => setSelectedContract(event.target.value)}
-                    label="Age"
-                >
-                    <MenuItem value={""}>
-                        <em>None</em>
-                    </MenuItem>
-                    {
-                        contracts.map(contract => (
-                            <MenuItem key={contract.url}
-                                      value={contract.url}>{contract.displayName}</MenuItem>
-                        ))
-                    }
-                </Select>
-            </FormControl>
-        </div>
+        <MuiThemeProvider theme={theme}>
+            <CookiesProvider>
+                <Box display="flex" justifyContent="center" mt={6}>
+                    <Box minWidth={320} maxWidth={502} display="flex" justifyContent="center">
+                        <Box padding={4} border={4}
+                             borderColor="secondary.light">
+                            <Header/>
+                            <OrganisationSelector contracts={contracts}
+                                                  selectedContract={selectedContract}
+                                                  setSelectedContract={setSelectedContract}/>
+                            <Box display="flex" justifyContent="space-between" mt={2}>
+                                <FormControlLabel
+                                    control={<Checkbox checked={rememberMe}
+                                                       onChange={handleRememberMe}
+                                                       name="remeberMe"/>}
+                                    label="Husk meg"
+                                    disabled={selectedContract.length === 0}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    disableElevation
+                                    disabled={selectedContract.length === 0}
+                                    href={selectedContract}
+                                >Fortsett</Button>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
+            </CookiesProvider>
+        </MuiThemeProvider>
     );
 }
 
