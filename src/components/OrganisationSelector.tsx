@@ -21,10 +21,9 @@ const OrganisationSelector = ({
                 <InputLabel id="demo-simple-select-outlined-label">Velg
                     tilhørighet</InputLabel>
                 <Select
-
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
-                    value={selectedContract}
+                    value={contracts.length > 0 ? selectedContract : ""}
                     onChange={(event: React.ChangeEvent<{ value: any }>) => setSelectedContract(event.target.value)}
                     label="Velg tilhørighet"
                 >
@@ -37,8 +36,8 @@ const OrganisationSelector = ({
                                       value={contract.url}>
                                 <Box display="flex" alignItems="center">
                                     <img
-                                        src={`data:image/png;base64, ${contract.image.base64Image}`}
-                                        alt="Red dot" width={32}/>
+                                        src={`data:${contract.image.mimeType};base64, ${contract.image.base64Image}`}
+                                        alt="Red dot" height={32}/>
                                     <Box height={1} ml={2}>{contract.displayName} </Box>
                                 </Box>
                             </MenuItem>

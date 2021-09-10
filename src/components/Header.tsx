@@ -16,19 +16,20 @@ const useStyles = makeStyles((theme) =>
 const Header = () => {
     const classes = useStyles();
     return (
-        <Box borderTop={0} borderRight={0} borderLeft={0} border={2}
-             borderColor="secondary.light" mb={4}>
-            <Typography align={"left"} variant="h1" className={classes.header}>Logg
-                på</Typography>
-            <Box display="flex" alignItems="center" mt={4} mb={4}>
-                <Box mr={2}>
-                    <img src={VigoLogo} alt="Vigo logo" width={100}/>
-                </Box>
+        <Box mb={4}>
+            <Box mb={4}>
+                <img src={VigoLogo} alt="Vigo logo" width={100}/>
+            </Box>
+            <Box mb={4}>
+                <Typography align={"left"} variant="h1" className={classes.header}>
+                    Logg på
+                </Typography>
+            </Box>
+            <Box fontStyle="italic">
                 <Typography variant="body1">
                     Velg tilhørighet for å logge på tjenesten.
                 </Typography>
             </Box>
-
         </Box>
     );
 };

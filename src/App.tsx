@@ -1,7 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import axios from "axios";
-import {Box, Button, Checkbox, FormControlLabel} from "@material-ui/core";
+import {
+    Box,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Typography
+} from "@material-ui/core";
 import {createTheme, MuiThemeProvider, ThemeOptions} from "@material-ui/core/styles";
 import {Contract} from "./model/Contract";
 import OrganisationSelector from "./components/OrganisationSelector";
@@ -34,60 +44,100 @@ function createMyTheme(options: ThemeOptions) {
 
 function App() {
     const theme = createMyTheme({});
-    const [contracts, setContracts] = useState<Contract[]>([]);
-    const [selectedContract, setSelectedContract] = useState<string>("");
+    const [customerContracts, setCustomerContracts] = useState<Contract[]>([]);
+    const [commonContracts, setCommonContracts] = useState<Contract[]>([]);
+    const [cookies, setCookie] = useCookies(['organisation', "rememberMe"]);
+    const [selectedContract, setSelectedContract] = useState<string>(cookies.organisation || "");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    const [cookies, setCookie] = useCookies(['rememberedOrganisation']);
 
 
     const getAuthenticationContracts = () => {
-        axios.get<Contract[]>("/api/organisations")
+        axios.get<Contract[]>("/api/contract/customer")
             .then(result => {
-                setContracts(result.data);
-                console.log(result);
+                setCustomerContracts(result.data);
+            })
+        axios.get<Contract[]>("/api/contract/common")
+            .then(result => {
+                setCommonContracts(result.data);
             })
     }
 
+    const handleSelectOrganisation = (organisation: string) => {
+        setSelectedContract(organisation);
+        setCookie("organisation", organisation, {maxAge: 31556926});
+    };
+
     const handleRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRememberMe(event.target.checked);
-        setCookie("rememberedOrganisation",selectedContract);
+        setCookie("rememberMe", event.target.checked, {maxAge: 31556926});
     };
 
     useEffect(() => {
-        if (cookies.rememberedOrganisation) {
-            window.location = cookies.rememberedOrganisation;
+        if (cookies.organisation && cookies.rememberMe) {
+            //window.location = cookies.organisation;
         }
         getAuthenticationContracts();
 
 
-
-    }, [cookies.rememberedOrganisation])
+    }, [cookies.organisation, cookies.rememberMe])
     return (
         <MuiThemeProvider theme={theme}>
             <CookiesProvider>
                 <Box display="flex" justifyContent="center" mt={6}>
                     <Box minWidth={320} maxWidth={502} display="flex" justifyContent="center">
-                        <Box padding={4} border={4}
-                             borderColor="secondary.light">
+                        <Box
+                            width={1}
+                            padding={4}
+                            border={2}
+                            borderColor="secondary.light"
+                            borderRadius="borderRadius"
+                        >
                             <Header/>
-                            <OrganisationSelector contracts={contracts}
+
+                            <OrganisationSelector contracts={customerContracts}
                                                   selectedContract={selectedContract}
-                                                  setSelectedContract={setSelectedContract}/>
+                                                  setSelectedContract={handleSelectOrganisation}/>
+
                             <Box display="flex" justifyContent="space-between" mt={2}>
                                 <FormControlLabel
                                     control={<Checkbox checked={rememberMe}
                                                        onChange={handleRememberMe}
                                                        name="remeberMe"/>}
                                     label="Husk meg"
-                                    disabled={selectedContract.length === 0}
+                                    disabled={!selectedContract}
                                 />
                                 <Button
                                     variant="contained"
                                     color="secondary"
                                     disableElevation
-                                    disabled={selectedContract.length === 0}
+                                    disabled={!selectedContract}
                                     href={selectedContract}
                                 >Fortsett</Button>
+                            </Box>
+                            <Box mt={4}>
+                                <Typography align={"left"} variant="subtitle1">
+                                    Andre påloggingsalternativer
+                                </Typography>
+                                <List aria-label="common-providers" disablePadding>
+                                    {
+                                        commonContracts.map(contract => (
+                                            <ListItem
+                                                key={contract.url}
+                                                button
+                                                disableGutters
+                                                component={Button} href={contract.url}
+                                            >
+                                                <ListItemIcon>
+                                                    <img
+                                                        src={`data:${contract.image.mimeType};base64, ${contract.image.base64Image}`}
+                                                        alt="Red dot" width={32}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary={contract.displayName}/>
+                                            </ListItem>
+
+                                        ))
+                                    }
+                                </List>
                             </Box>
                         </Box>
                     </Box>
