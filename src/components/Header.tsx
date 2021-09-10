@@ -18,7 +18,7 @@ const Header = () => {
     return (
         <Box mb={4}>
             <Box mb={4}>
-                <img src={VigoLogo} alt="Vigo logo" width={100}/>
+                <img src={VigoLogo} alt="Vigo logo" width={110}/>
             </Box>
             <Box mb={4}>
                 <Typography align={"left"} variant="h1" className={classes.header}>

@@ -9,8 +9,7 @@ import {
     List,
     ListItem,
     ListItemIcon,
-    ListItemText,
-    Typography
+    ListItemText
 } from "@material-ui/core";
 import {createTheme, MuiThemeProvider, ThemeOptions} from "@material-ui/core/styles";
 import {Contract} from "./model/Contract";
@@ -98,7 +97,8 @@ function App() {
                                                   selectedContract={selectedContract}
                                                   setSelectedContract={handleSelectOrganisation}/>
 
-                            <Box display="flex" justifyContent="space-between" mt={2}>
+                            <Box display="flex" flexDirection="column"
+                                 justifyContent="space-between" mt={2}>
                                 <FormControlLabel
                                     control={<Checkbox checked={rememberMe}
                                                        onChange={handleRememberMe}
@@ -107,6 +107,7 @@ function App() {
                                     disabled={!selectedContract}
                                 />
                                 <Button
+                                    size="large"
                                     variant="contained"
                                     color="secondary"
                                     disableElevation
@@ -115,9 +116,9 @@ function App() {
                                 >Fortsett</Button>
                             </Box>
                             <Box mt={4}>
-                                <Typography align={"left"} variant="subtitle1">
+                                <Box textAlign="left" fontWeight="fontWeightBold">
                                     Andre påloggingsalternativer
-                                </Typography>
+                                </Box>
                                 <List aria-label="common-providers" disablePadding>
                                     {
                                         commonContracts.map(contract => (
