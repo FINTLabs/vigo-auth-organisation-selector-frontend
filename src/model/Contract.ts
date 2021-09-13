@@ -6,7 +6,7 @@ export interface Image {
 }
 
 export interface Contract {
-    url: string,
+    cardId: string,
     displayName: string,
     image: Image
 

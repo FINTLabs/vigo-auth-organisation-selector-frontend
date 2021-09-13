@@ -32,8 +32,8 @@ const OrganisationSelector = ({
                     </MenuItem>
                     {
                         contracts.map(contract => (
-                            <MenuItem key={contract.url}
-                                      value={contract.url}>
+                            <MenuItem key={contract.cardId}
+                                      value={contract.cardId}>
                                 <Box display="flex" alignItems="center">
                                     <img
                                         src={`data:${contract.image.mimeType};base64, ${contract.image.base64Image}`}
