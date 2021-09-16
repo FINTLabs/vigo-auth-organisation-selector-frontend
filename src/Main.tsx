@@ -46,6 +46,17 @@ const Main = () => {
             });
     }
 
+    const doRedirectAdditionalContract = (contractId: string) => {
+        axios.post("/api/contract/redirect", {
+            "id": contractId,
+            "target": query.get("target") || "",
+            "sid": query.get("sid") || ""
+        },)
+            .then((result) => {
+                window.location = result.data.url;
+            });
+    }
+
     const handleSelectOrganisation = (organisation: string) => {
         setSelectedContract(organisation);
         setCookie("organisation", organisation, {maxAge: 31556926});
@@ -112,6 +123,7 @@ const Main = () => {
                                             button
                                             disableGutters
                                             component={Button} href={contract.cardId}
+                                            onClick={() => doRedirectAdditionalContract(contract.cardId)}
                                         >
                                             <ListItemIcon>
                                                 <img
