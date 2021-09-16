@@ -17,12 +17,12 @@ import axios from "axios";
 import useQuery from "./hooks/useQuery";
 
 const Main = () => {
+    const query = useQuery();
     const [customerContracts, setCustomerContracts] = useState<Contract[]>([]);
     const [commonContracts, setCommonContracts] = useState<Contract[]>([]);
     const [cookies, setCookie] = useCookies(['organisation', "rememberMe"]);
     const [selectedContract, setSelectedContract] = useState<string>(cookies.organisation || "");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    const query = useQuery();
 
     const getAuthenticationContracts = () => {
         axios.get<Contract[]>("/api/contract/customer")
@@ -38,10 +38,12 @@ const Main = () => {
     const doRedirect = () => {
         axios.post("/api/contract/redirect", {
             "id": selectedContract,
-            "target": query.get("target")
+            "target": query.get("target") || "",
+            "sid": query.get("sid") || ""
         },)
             .then((result) => {
-                window.location = result.data.url;
+                console.log(result.data.url)
+                //window.location = result.data.url;
             });
     }
 
