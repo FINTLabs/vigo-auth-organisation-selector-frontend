@@ -42,8 +42,7 @@ const Main = () => {
             "sid": query.get("sid") || ""
         },)
             .then((result) => {
-                console.log(result.data.url)
-                //window.location = result.data.url;
+                window.location = result.data.url;
             });
     }
 
