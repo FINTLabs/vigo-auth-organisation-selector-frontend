@@ -122,7 +122,7 @@ const Main = () => {
                                             key={contract.cardId}
                                             button
                                             disableGutters
-                                            component={Button} href={contract.cardId}
+                                            component={Button}
                                             onClick={() => doRedirectAdditionalContract(contract.cardId)}
                                         >
                                             <ListItemIcon>
