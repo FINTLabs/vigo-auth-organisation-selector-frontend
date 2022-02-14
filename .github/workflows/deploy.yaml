@@ -1,0 +1,36 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+
+env:
+  REGISTRY_NAME: fintlabsacr
+  APP_NAME: vigo-auth-organisation-selector-frontend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Connect to Azure Container Registry (ACR)
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Container build and push to a Azure Container Registry (ACR)
+        run: |
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
+
+#      - name: Trigger backend build
+#        uses: convictional/trigger-workflow-and-wait@v1.5.0
+#        with:
+#          owner: fintlabs
+#          repo: vigo-azure-ad-service
+#          ref: master
+#          workflow_file_name: deploy.yaml
+#          github_token: ${{ secrets.GITHUBWORKFLOW_TOKEN_FSJOVATSEN }}
