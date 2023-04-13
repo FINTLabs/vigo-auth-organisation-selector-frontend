@@ -16,7 +16,7 @@ import {useCookies} from "react-cookie";
 import axios from "axios";
 import useQuery from "./hooks/useQuery";
 import {types} from "util";
-import isBooleanObject = module
+// import isBooleanObject = module;
 import {hiIN} from "@material-ui/core/locale";
 
 const Main = () => {
