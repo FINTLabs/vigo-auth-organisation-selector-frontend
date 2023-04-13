@@ -15,6 +15,9 @@ import {Contract} from "./model/Contract";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import useQuery from "./hooks/useQuery";
+import {types} from "util";
+import isBooleanObject = module
+import {hiIN} from "@material-ui/core/locale";
 
 const Main = () => {
     const query = useQuery();
@@ -76,6 +79,12 @@ const Main = () => {
 
     }, [cookies.organisation, cookies.rememberMe]);
 
+    function boxHidden() {
+        let hide: boolean = !!(query.get("target") || "").search("qscore.vigoiks.no")
+        return hide;
+    }
+
+
     return (
         <main>
             <Box display="flex" justifyContent="center" mt={6}>
@@ -111,7 +120,7 @@ const Main = () => {
                                 onClick={doRedirect}
                             >Fortsett</Button>
                         </Box>
-                        <Box mt={4}>
+                        <Box mt={4} hidden={boxHidden()}>
                             <Box textAlign="left" fontWeight="fontWeightBold">
                                 Andre påloggingsalternativer
                             </Box>
