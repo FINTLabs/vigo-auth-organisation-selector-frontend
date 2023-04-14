@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vigo-auth-organisation-selector-frontend
+spec:
+  template:
+      containers:
+        - name: vigo-auth-organisation-selector-frontend
+          image: ghcr.io/fintlabs/vigo-auth-organisation-selector-frontend:sha-0000000

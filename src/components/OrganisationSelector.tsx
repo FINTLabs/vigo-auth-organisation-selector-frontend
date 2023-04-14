@@ -29,7 +29,7 @@ const OrganisationSelector = ({
                 >
                     <MenuItem value={""}>
                         <em>Velg tilhørighet</em>
-                    </MenuItem>
+                    </MenuItem>a
                     {
                         contracts.map(contract => (
                             <MenuItem key={contract.cardId}
