@@ -28,7 +28,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.AKS_API_INFRA_GITHUB }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -60,7 +60,7 @@ jobs:
         uses: azure/k8s-deploy@v4.4
         with:
           manifests: |
-            k8s/pwf/betaling-demo.yaml
+            k8s/api/auth.yaml
           images: |
             ${{ steps.meta.outputs.tags }}
           namespace: default
