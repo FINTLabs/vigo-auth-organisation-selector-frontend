@@ -1,15 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - service.yaml
+  - flais.yaml
   - ingress-route.yaml
-  - deployment.yaml
-namespace: default
 commonLabels:
   app.kubernetes.io/name: vigo-auth-organisation-selector-frontend
   app.kubernetes.io/instance: vigo-auth-organisation-selector-frontend
   app.kubernetes.io/version: "latest"
-  app.kubernetes.io/managed-by: "ga"
-  app.kubernetes.io/component: frontend
-  app.kubernetes.io/part-of: vigo-auth-organisation-selector
-  fintlabs.no/team: flais
+  app.kubernetes.io/managed-by: GA
+  app.kubernetes.io/component: selector frontend
+  app.kubernetes.io/part-of: fint-core-v2
+  fintlabs.no/team: core
+  fintlabs.no/org-id: fintlabs.no
