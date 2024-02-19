@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, createStyles, makeStyles, Typography} from "@material-ui/core";
-import VigoLogo from "../images/vigo.svg";
+import NovariLogo from "../images/novari.jpg";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -18,7 +18,7 @@ const Header = () => {
     return (
         <Box mb={4}>
             <Box mb={4}>
-                <img src={VigoLogo} alt="Vigo logo" width={110}/>
+                <img src={NovariLogo} alt="Novari logo" width={110}/>
             </Box>
             <Box mb={4}>
                 <Typography align={"left"} variant="h1" className={classes.header}>
