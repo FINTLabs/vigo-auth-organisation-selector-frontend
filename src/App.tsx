@@ -9,14 +9,14 @@ function createMyTheme(options: ThemeOptions) {
     return createTheme({
         palette: {
             secondary: {
-                light: '#7fb434',
+                light: '#F8ECDB',
                 main: '#5FA202',
                 dark: '#427101',
             },
             primary: {
                 light: '#4b727a',
-                main: '#1F4F59',
-                dark: '#15373e',
+                main: '#6B133D',
+                dark: '#5A51E1',
             },
         },
         typography: {
