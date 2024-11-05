@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, createStyles, makeStyles, Typography} from "@material-ui/core";
-import NovariLogo from "../images/novari.jpg";
+import NovariLogo from "../images/novari_logo_small.png";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
