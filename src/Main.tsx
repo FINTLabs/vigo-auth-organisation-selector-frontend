@@ -104,7 +104,7 @@ const Main = () => {
                             <FormControlLabel
                                 control={<Checkbox checked={rememberMe}
                                                    onChange={handleRememberMe}
-                                                   name="remeberMe"/>}
+                                                   name="rememberMe"/>}
                                 label="Husk meg"
                                 disabled={!selectedContract}
                             />
