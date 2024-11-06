@@ -22,7 +22,7 @@ const Main = () => {
     const [commonContracts, setCommonContracts] = useState<Contract[]>([]);
     const [cookies, setCookie] = useCookies(['organisation', "rememberMe"]);
     const [selectedContract, setSelectedContract] = useState<string>(cookies.organisation || "");
-    const [rememberMe, setRememberMe] = useState<boolean>(false);
+    const [rememberMe, setRememberMe] = useState<boolean>(cookies.rememberMe === 'true');
 
     const getAuthenticationContracts = () => {
         axios.get<Contract[]>("/api/contract/customer")
@@ -106,7 +106,7 @@ const Main = () => {
                                                    onChange={handleRememberMe}
                                                    name="rememberMe"/>}
                                 label="Husk meg"
-                                disabled={!selectedContract}
+                                //disabled={!selectedContract}
                             />
                             <Button
                                 size="large"
