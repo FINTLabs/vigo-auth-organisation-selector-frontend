@@ -10,13 +10,13 @@ function createMyTheme(options: ThemeOptions) {
         palette: {
             secondary: {
                 light: '#F8ECDB',
-                main: '#5FA202',
-                dark: '#427101',
+                main: '#f19b89',
+                dark: '#ec6653',
             },
             primary: {
-                light: '#4b727a',
-                main: '#6B133D',
-                dark: '#5A51E1',
+                light: '#be226c',
+                main: '#8c1950',
+                dark: '#570F31',
             },
         },
         typography: {
