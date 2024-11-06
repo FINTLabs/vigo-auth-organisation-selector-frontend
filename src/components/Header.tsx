@@ -18,7 +18,7 @@ const Header = () => {
     return (
         <Box mb={4}>
             <Box mb={4}>
-                <img src={NovariLogo} alt="Novari logo" width={110}/>
+                <img src={NovariLogo} alt="Novari logo" width={250} />
             </Box>
             <Box mb={4}>
                 <Typography align={"left"} variant="h1" className={classes.header}>
