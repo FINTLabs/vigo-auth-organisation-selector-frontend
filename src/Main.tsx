@@ -106,7 +106,7 @@ const Main = () => {
                                                    onChange={handleRememberMe}
                                                    name="rememberMe"/>}
                                 label="Husk meg"
-                                //disabled={!selectedContract}
+                                disabled={!selectedContract}
                             />
                             <Button
                                 size="large"
